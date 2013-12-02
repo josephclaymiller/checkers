@@ -5,8 +5,8 @@ class Board
 
   def initialize
     @rows = Array.new(ROWS) { Array.new(ROWS) }
-    set_up(:red)
-    set_up(:black)
+    set_up(:dark)
+    set_up(:light)
   end
 
   def [](x, y)
@@ -15,6 +15,21 @@ class Board
 
   def []=(x, y, el)
     self.rows[x][y] = el
+  end
+
+  def set_up(color)
+    row1, row2 = 0, 1
+    if color == :light
+      row1, row2 = ROWS - 1, ROWS - 2
+    end
+    set_up_rows = [row1, row2]
+    ROWS.times do |col|
+      set_up_rows.each do |row|
+        pos = [row, col]
+        self[*pos] = Piece.new(color, pos, self)
+      end
+    end
+    self.rows
   end
 
   def to_s
@@ -27,22 +42,6 @@ class Board
       board_string << "\n"
     end
     board_string << "\n"
-  end
-
-  def set_up(color)
-    row1, row2 = 0, 1
-    if color == :black
-      row1, row2 = ROWS - 1, ROWS - 2
-    end
-    set_up_rows = [row1, row2]
-    ROWS.times do |col|
-      set_up_rows.each do |row|
-        pos = [row, col]
-        next_piece = Piece.new(color, pos)
-        self[row, col] = next_piece
-      end
-    end
-    self.rows
   end
 
 end
