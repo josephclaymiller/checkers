@@ -32,6 +32,10 @@ class Board
     self.rows
   end
 
+  def num_rows
+    ROWS
+  end
+
   def to_s
     board_string = ""
     self.rows.each do |row|
