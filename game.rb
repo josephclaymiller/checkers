@@ -46,4 +46,9 @@ if __FILE__ == $PROGRAM_NAME
   # Move kings backwards
   p1.perform_slide([6,3])
   p2.perform_slide([1,2])
+  # piece jump to take king
+  p5 = game.board[0,3]
+  p5.perform_jump([2,1])
+  # king jump to take piece
+  p1.perform_jump([4,5])
 end
