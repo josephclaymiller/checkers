@@ -1,6 +1,6 @@
 class Piece
 
-  attr_accessor :pos, :board
+  attr_accessor :pos, :board, :color
 
   def initialize(color, pos, board)
     @color = color
@@ -12,7 +12,7 @@ class Piece
   end
 
   def perform_slide(pos)
-    valid_slide = is_valid_slide?(pos)
+    valid_slide = is_valid_slide?(pos) # check if valid slide
     move(pos) if valid_slide
     valid_slide
   end
@@ -22,8 +22,8 @@ class Piece
     middle_x = self.pos[0] + ((pos[0] - self.pos[0]) / 2)
     middle_y = self.pos[1] + ((pos[1] - self.pos[1]) / 2)
     middle_pos = [middle_x, middle_y]
-    # check if valid jump
-    valid_jump = is_valid_jump?(pos, middle_pos)
+
+    valid_jump = is_valid_jump?(pos, middle_pos) # check if valid jump
     if valid_jump
       # remove piece jumped over
       self.board[*middle_pos] = nil
@@ -81,7 +81,11 @@ class Piece
       return false
     end
     unless self.board[*middle_pos]
-      puts "not jumping over a piece on board #{middle_pos}"
+      puts "no piece on board at #{middle_pos} to jump over"
+      return false
+    end
+    if self.board[*middle_pos].color == self.color
+      puts "Can not jump own pieces"
       return false
     end
     true

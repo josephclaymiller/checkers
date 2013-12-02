@@ -51,4 +51,7 @@ if __FILE__ == $PROGRAM_NAME
   p5.perform_jump([2,1])
   # king jump to take piece
   p1.perform_jump([4,5])
+  # Attempt to jump over own piece
+  p6 = game.board[1,0]
+  p6.perform_jump([3,2])
 end
