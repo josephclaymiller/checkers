@@ -1,0 +1,4 @@
+checkers
+========
+
+ruby checkers game
