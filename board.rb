@@ -5,8 +5,8 @@ class Board
 
   def initialize
     @rows = Array.new(ROWS) { Array.new(ROWS) }
-    # set_up(:red)
-    # set_up(:black)
+    set_up(:red)
+    set_up(:black)
   end
 
   def [](x, y)
@@ -21,7 +21,7 @@ class Board
     board_string = ""
     self.rows.each do |row|
       row.each do |el|
-        symbol = (el ? el : "_")
+        symbol = (el ? el.to_s : ".")
         board_string << symbol << " "
       end
       board_string << "\n"
@@ -39,7 +39,7 @@ class Board
       set_up_rows.each do |row|
         pos = [row, col]
         next_piece = Piece.new(color, pos)
-        self.rows[row, col] = next_piece
+        self[row, col] = next_piece
       end
     end
     self.rows
