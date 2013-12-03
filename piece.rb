@@ -20,13 +20,13 @@ class Piece
     valid_slide
   end
 
-  def perform_jump(pos)
+  def perform_jump(pos, first_jump = true)
     # Find piece jumped over
     middle_x = self.pos[0] + ((pos[0] - self.pos[0]) / 2)
     middle_y = self.pos[1] + ((pos[1] - self.pos[1]) / 2)
     middle_pos = [middle_x, middle_y]
-
-    valid_jump = is_valid_jump?(pos, middle_pos) # check if valid jump
+    # check if valid jump
+    valid_jump = is_valid_jump?(pos, middle_pos, first_jump)
     if valid_jump
       # remove piece jumped over
       self.board[*middle_pos] = nil
@@ -36,17 +36,19 @@ class Piece
     valid_jump
   end
 
-  def perform_moves!(move_sequence)
-    # if only 1 move in sequence
+  def perform_moves!(*move_sequence)
+    # p move_sequence
+    #if only 1 move in sequence
     if move_sequence.count == 1
       pos = move_sequence[0]
       return true if perform_slide(pos)
       return true if perform_jump(pos)
       raise InvalidMoveError
     end
-    # if more than 1 move
-    move_sequence.each do |move_pos|
-      raise InvalidMoveError unless perform_jump(move_pos)
+    # if more than 1 move, all jumps
+    move_sequence.each_with_index do |move_pos, i|
+      first_move = (i == 0 ? true : false)
+      raise InvalidMoveError unless perform_jump(move_pos, first_move)
     end
   end
 
@@ -89,14 +91,14 @@ class Piece
     true
   end
 
-  def is_valid_jump?(pos, middle_pos)
+  def is_valid_jump?(pos, middle_pos, first_jump)
     row_diff = (pos[0] - self.pos[0])
     col_diff = (pos[1] - self.pos[1])
     unless (row_diff.abs == 2) && (col_diff.abs == 2)
       puts "Must jump 2 spaces diagonally"
       return false
     end
-    if !is_king? && (row_diff != @direction * 2)
+    if !is_king? && first_jump && (row_diff != @direction * 2)
       puts "Must jump in direction"
       return false
     end
