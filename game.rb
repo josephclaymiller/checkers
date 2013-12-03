@@ -93,6 +93,32 @@ if __FILE__ == $PROGRAM_NAME
   # d1.perform_moves!(d1_seq2)
   # d1.perform_moves!(*d1_seq3)
 
+  # d1 = game.board[1,0]
+  # l1 = game.board[6,1]
+  # l2 = game.board[6,3]
+  #
+  # l1_seq1 = [5,0]
+  # l1_seq2 = [4,1]
+  #
+  # l2_seq1 = [5,2]
+  # l2_seq2 = [4,3]
+  #
+  # d1_seq1 = [2,1]
+  # d1_seq2 = [3,0]
+  # d1_seq3 = [[5,2],[3,4]]
+  #
+  # l1.valid_move_seq?(l1_seq1)
+  # l1.valid_move_seq?(l1_seq2)
+  # puts "Original board: \n#{game.board}"
+
+  # l2.valid_move_seq?(l2_seq1)
+  # # l2.valid_move_seq?(l2_seq2)
+  #
+  # d1.valid_move_seq?(d1_seq1)
+  # d1.valid_move_seq?(d1_seq2)
+  # d1.valid_move_seq?(*d1_seq3)
+
+  #Test perform_moves
   d1 = game.board[1,0]
   l1 = game.board[6,1]
   l2 = game.board[6,3]
@@ -107,15 +133,16 @@ if __FILE__ == $PROGRAM_NAME
   d1_seq2 = [3,0]
   d1_seq3 = [[5,2],[3,4]]
 
-  l1.valid_move_seq?(l1_seq1)
-  l1.valid_move_seq?(l1_seq2)
-  puts "Original board: \n#{game.board}"
+  l1.perform_moves(l1_seq1)
+  l1.perform_moves(l1_seq2)
 
-  # l2.valid_move_seq?(l2_seq1)
-  # # l2.valid_move_seq?(l2_seq2)
-  #
-  # d1.valid_move_seq?(d1_seq1)
-  # d1.valid_move_seq?(d1_seq2)
-  # d1.valid_move_seq?(*d1_seq3)
+  l2.perform_moves(l2_seq1)
+  l2.perform_moves(l2_seq2)
 
+  d1.perform_moves(d1_seq1)
+  d1.perform_moves(d1_seq2)
+  d1.perform_moves(*d1_seq3)
+
+  #perform invalid move sequence
+  d1.perform_moves(d1_seq1)
 end

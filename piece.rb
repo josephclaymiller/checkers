@@ -14,6 +14,30 @@ class Piece
     @direction = (@color == :light ? -1 : 1)
   end
 
+  def is_king?
+    @king
+  end
+
+  def to_s
+    piece_string = ""
+    case @color
+    when :dark
+      is_king? ? 'D' : 'd'
+    when :light
+      is_king? ? 'L' : 'l'
+    else
+     '?'
+    end
+  end
+
+  def perform_moves(*move_sequence)
+    if valid_move_seq?(*move_sequence)
+      perform_moves!(*move_sequence)
+    else
+      raise InvalidMoveError
+    end
+  end
+
   def perform_slide(pos)
     valid_slide = is_valid_slide?(pos) # check if valid slide
     move(pos) if valid_slide
@@ -52,21 +76,7 @@ class Piece
     end
   end
 
-  def is_king?
-    @king
-  end
-
-  def to_s
-    piece_string = ""
-    case @color
-    when :dark
-      is_king? ? 'D' : 'd'
-    when :light
-      is_king? ? 'L' : 'l'
-    else
-     '?'
-    end
-  end
+  private
 
   def valid_move_seq?(*move_sequence)
     begin
@@ -79,10 +89,6 @@ class Piece
       true
     end
   end
-
-
-  private
-
 
   def is_valid_slide?(pos)
     row_diff = (pos[0] - self.pos[0])
