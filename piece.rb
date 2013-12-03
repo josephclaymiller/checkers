@@ -68,10 +68,21 @@ class Piece
     end
   end
 
+  def valid_move_seq?(*move_sequence)
+    begin
+      new_board = self.board.dup
+      new_board[*self.pos].perform_moves!(*move_sequence)
+    rescue InvalidMoveError => e
+      puts "Invalid move sequence"
+      false
+    else
+      true
+    end
+  end
+
+
   private
 
-  def valid_move_seq?
-  end
 
   def is_valid_slide?(pos)
     row_diff = (pos[0] - self.pos[0])
@@ -120,7 +131,8 @@ class Piece
     if maybe_promote
       puts "Kinged at #{pos}"
     end
-    p self.board
+    puts "Moved to #{pos}"
+    puts self.board
   end
 
   def maybe_promote
