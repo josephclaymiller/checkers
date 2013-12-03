@@ -54,4 +54,19 @@ if __FILE__ == $PROGRAM_NAME
   # Attempt to jump over own piece
   p6 = game.board[1,0]
   p6.perform_jump([3,2])
+
+  # move sequence
+  game2 = Game.new
+  p game2
+  p1 = game2.board[1,2]
+  pos1 = [2,1]
+  puts "#{p1} move to #{pos1}"
+  p p1.perform_moves!([pos1])
+  pos2 = [3,0]
+  pos3 = [4,1]
+  pos4 = [5,2]
+  move_sequence = [pos2, pos3, pos4]
+  puts "Move pieces at #{p1.pos} to #{move_sequence}"
+  p1.perform_moves!(move_sequence)
+
 end

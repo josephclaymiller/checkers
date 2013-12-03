@@ -3,10 +3,12 @@ class Board
 
   attr_accessor :rows
 
-  def initialize
+  def initialize(starting = true)
     @rows = Array.new(ROWS) { Array.new(ROWS) }
-    set_up(:dark)
-    set_up(:light)
+    if starting
+      set_up(:dark)
+      set_up(:light)
+    end
   end
 
   def [](x, y)
@@ -34,6 +36,19 @@ class Board
 
   def num_rows
     ROWS
+  end
+
+  def pieces
+    @rows.flatten.compact
+  end
+
+  def dup
+    new_board = Board.new(false)
+    pieces.each do |piece|
+      new_piece = piece.class.new(piece.color, piece.pos, piece.board)
+      new_board[piece.pos] = new_piece
+    end
+    new_board
   end
 
   def to_s

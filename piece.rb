@@ -1,3 +1,6 @@
+class InvalidMoveError < StandardError
+end
+
 class Piece
 
   attr_accessor :pos, :board, :color
@@ -33,6 +36,20 @@ class Piece
     valid_jump
   end
 
+  def perform_moves!(move_sequence)
+    # if only 1 move in sequence
+    if move_sequence.count == 1
+      pos = move_sequence[0]
+      return true if perform_slide(pos)
+      return true if perform_jump(pos)
+      raise InvalidMoveError
+    end
+    # if more than 1 move
+    move_sequence.each do |move_pos|
+      raise InvalidMoveError unless perform_jump(move_pos)
+    end
+  end
+
   def is_king?
     @king
   end
@@ -50,6 +67,9 @@ class Piece
   end
 
   private
+
+  def valid_move_seq?
+  end
 
   def is_valid_slide?(pos)
     row_diff = (pos[0] - self.pos[0])
