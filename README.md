@@ -1,4 +1,4 @@
-checkers
+Checkers
 ========
 
-ruby checkers game
+Command line version of the game of checkers in Ruby.
